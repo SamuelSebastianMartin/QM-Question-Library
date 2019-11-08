@@ -19,7 +19,6 @@ from sympy.matrices import Matrix
 import random
 import os
 
-#  Change this to not use 'system'
 f = open('deleteme.markdown', 'w')
 
 matrix_size = int(input('\nHow many rows in your square matrix?\n \
@@ -27,17 +26,17 @@ matrix_size = int(input('\nHow many rows in your square matrix?\n \
 quant = int(input('How many matrices do you want? '))
 
 for i in range(quant):
-    mlist = [random.randint(-9, 9) for x in range(matrix_size * matrix_size)]
-    M = Matrix(matrix_size, matrix_size, mlist)
+    elements = [random.randint(-9, 9) for x in range(matrix_size * matrix_size)]
+    A = Matrix(matrix_size, matrix_size, elements)
     try:
-        Minv = M.inv()
+        inv_A = A.inv()
     except ValueError:
-        Minv = 'Singular matrix'
-    row = str('{}. $M = {}$\t\t$inv(M) = {}$\n\n'.format
+        inv_A = 'Singular matrix'
+    row = str('{}. $A = {}$\t\t$inv(A) = {}$\n\n'.format
               (
                    i + 1,
-                   sp.latex(M),
-                   sp.latex(Minv)
+                   sp.latex(A),
+                   sp.latex(inv_A)
               ))
 
     f.write(row)
