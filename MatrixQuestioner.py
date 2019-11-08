@@ -56,7 +56,7 @@ class MatrixQuestioner:
         1 and the instance variable, 'symbols'.
         """
         a, b = sp.symbols('a b')
-        syms = ['a', '(1-a)', 'b', '(b+1)', 'ab', '2(a-b)']
+        syms = ['a', '(1-a)', 'b', '(b+1)', 'a*b', '2*(a-b)']
         for s in range(self.symbols):
             sym_indx = random.randint(0, len(syms) - 1)
             elmt_indx = random.randint(0, len(elements) - 1)
@@ -82,7 +82,7 @@ A, inv_A = a.inverse()
 print(A)
 print(inv_A)
 
-b = MatrixQuestioner(3, symbols=65)
+b = MatrixQuestioner(3, symbols=9)
 B, inv_B = b.inverse()
 print(B)
 print(inv_B)
