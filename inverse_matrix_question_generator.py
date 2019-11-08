@@ -14,33 +14,21 @@ outputs a .docx with the matrix-inverse pairs layed
 out for a question sheet.
 """
 
-import sympy as sp
-from sympy.matrices import Matrix
-import random
 import os
+import MatrixQuestioner as mq
 
-f = open('deleteme.markdown', 'w')
-
-matrix_size = int(input('\nHow many rows in your square matrix?\n \
-                    enter 3 for a 3 x 3 matrix: '))
+matrix_size = int(input('\nHow many rows in matrices?\n \
+                        enter 3 for a 3 x 3 matrix: '))
 quant = int(input('How many matrices do you want? '))
 
+f = open('deleteme.markdown', 'w')
 for i in range(quant):
-    elements = [random.randint(-9, 9) for x in range(matrix_size * matrix_size)]
-    A = Matrix(matrix_size, matrix_size, elements)
-    try:
-        inv_A = A.inv()
-    except ValueError:
-        inv_A = 'Singular matrix'
-    row = str('{}. $A = {}$\t\t$inv(A) = {}$\n\n'.format
-              (
-                   i + 1,
-                   sp.latex(A),
-                   sp.latex(inv_A)
-              ))
+    matrix = mq.MatrixQuestioner(matrix_size)
+    A, inv_A = matrix.inverse()
+    question = 'A = {}\t\tinv(A) = {}'.format(A, inv_A)
 
-    f.write(row)
-
+    f.write(question)
 f.close()
+
 os.system('pandoc -o questionsheets/inverse_matrix_questions.docx deleteme.markdown')
 os.remove('deleteme.markdown')
