@@ -25,6 +25,7 @@ class MatrixQuestioner:
         self.rows = rows
         self.symbols = symbols
         self.wrap = latex_dollar_wrap
+        self.elmnt_count = self.rows * self.rows
 
     def inverse(self):
         """
@@ -34,8 +35,7 @@ class MatrixQuestioner:
         'symbols' is non-zero, then that many non numberial elements
         will be added.
         """
-        elmnt_count = self.rows * self.rows
-        elements = [random.randint(-9, 9) for x in range(elmnt_count)]
+        elements = [random.randint(-9, 9) for x in range(self.elmnt_count)]
         if self.symbols > 0:
             elements = self.insert_symbols(elements)
         A = Matrix(self.rows, self.rows, elements)
@@ -76,13 +76,44 @@ class MatrixQuestioner:
             M = '$' + M + '$'
         return M
 
+    def simultaneous_setup(self):
+        """
+        Sets up a system of equations Ax = d, plus ans (a
+        vector representing the values of the x vector.
+        All vectors remain sympy objects (not strings), so
+        they can be passed to other functions to return
+        printable strings.
+        """
+        #  Set up 'ans'
+        ans_values = [random.randint(-9, 9) for x in range(self.rows)]
+        ans = Matrix(self.rows, 1, ans_values)  # Final answers: x in Ax = d.
+
+        #  Set up 'A'
+        A_values = [random.randint(-3, 12) for x in range(self.elmnt_count)]
+        A = Matrix(self.rows, self.rows, A_values)  # Coefficient matrix: A in Ax = d.
+
+        #  Set up 'd'
+        d = A * ans  # RHS of equations: d in Ax = d.
+
+        #  Set up 'x'  (Using strings, not symbols)
+        var_names = ['x', 'y', 'z', 'u', 'v', 'w']  # The variables as names.
+        if self.rows > len(var_names):
+            raise Exception('Insufficient variable symbols for this size')
+        x = Matrix(self.rows, 1, [var_names[i] for i in range(self.rows)])
+        return A, x, d, ans
+
+    def solve_system(self):
+        A, x, d, ans = a.simultaneous_setup()
+        A = self.printable(A)
+        x = self.printable(x)
+        d = self.printable(d)
+        ans = self.printable(ans)
+        return A, x, d, ans
+
 
 a = MatrixQuestioner(3)
-A, inv_A = a.inverse()
+A, x, d, ans = a.solve_system()
 print(A)
-print(inv_A)
-
-b = MatrixQuestioner(3, symbols=9)
-B, inv_B = b.inverse()
-print(B)
-print(inv_B)
+print(x)
+print(d)
+print(ans)
