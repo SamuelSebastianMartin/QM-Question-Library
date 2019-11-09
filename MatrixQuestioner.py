@@ -78,25 +78,25 @@ class MatrixQuestioner:
 
     def simultaneous_setup(self):
         """
-        Sets up a system of equations Ax = d, plus ans (a
-        vector representing the values of the x vector.
+        Sets up a system of equations Ax = d, plus 'ans'
+        (a vector representing the values of the x vector).
         All vectors remain sympy objects (not strings), so
         they can be passed to other functions to return
         printable strings.
         """
-        #  Set up 'ans'
+        #  Set up 'ans' (Answers: 'hidden' values of x in Ax = d)
         ans_values = [random.randint(-9, 9) for x in range(self.rows)]
-        ans = Matrix(self.rows, 1, ans_values)  # Final answers: x in Ax = d.
+        ans = Matrix(self.rows, 1, ans_values)
 
-        #  Set up 'A'
+        #  Set up 'A' (Coefficient matrix)
         A_values = [random.randint(-3, 12) for x in range(self.elmnt_count)]
-        A = Matrix(self.rows, self.rows, A_values)  # Coefficient matrix: A in Ax = d.
+        A = Matrix(self.rows, self.rows, A_values)
 
         #  Set up 'd'
-        d = A * ans  # RHS of equations: d in Ax = d.
+        d = A * ans
 
-        #  Set up 'x'  (Using strings, not symbols)
-        var_names = ['x', 'y', 'z', 'u', 'v', 'w']  # The variables as names.
+        #  Set up 'x'  (Using strings as variable names, not symbols)
+        var_names = ['x', 'y', 'z', 'u', 'v', 'w']
         if self.rows > len(var_names):
             raise Exception('Insufficient variable symbols for this size')
         x = Matrix(self.rows, 1, [var_names[i] for i in range(self.rows)])
@@ -111,7 +111,7 @@ class MatrixQuestioner:
         return A, x, d, ans
 
 
-a = MatrixQuestioner(3)
+a = MatrixQuestioner(2)
 A, x, d, ans = a.solve_system()
 print(A)
 print(x)
