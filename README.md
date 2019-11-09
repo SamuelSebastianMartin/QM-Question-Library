@@ -1,7 +1,7 @@
 # QM Question Library
 
 This is a collection of scripts for generating mathematics
-questions for my university course.
+questions for my university students.
 
 Scripts are added in an ad hoc basis, and will probably not
 be refactored before next academic year.
@@ -17,7 +17,8 @@ be refactored before next academic year.
 *   pandoc is called as a linux `os.system` call.
 
 ## Modules so far:
-### inverse_matrix_question_generator.py
+
+### inverse_matrix.py
 
 Generates matrices and their inverse.
 *   The user is asked for dimension of the
@@ -27,19 +28,31 @@ Generates matrices and their inverse.
 *   The user is asked for the number of
     questions required.
 
-*   A Word document is saved to $PWD with
+*   A Word document is saved to questionsheets/ with
     the questions on it.
 
-### simultaneous_matrix_eq_generator.py
+*   NOTE: the underlying class can handle symbols
+    in the derivation of the inverse. If this is
+    required, edit the code where `MatrixQuestioner`
+    is called, to indicate the number of symbols required.
+    For example:
+
+    `matrix = mq.MatrixQuestioner(rows, symbols=1)`
+
+### system_solve.py
 
 Generates a system of matrices which
 represent a system of simultaneous equations.
 
 *   The user is asked for the dimensions (i.e.
     the number of equations/rows in the matrix.
+    NOTE: The dimensions are limited to 6 by the
+    number of symbolic variables. This seems more
+    than sufficient. An error message will be
+    sent for anything larger.
 
 *   The user is asked for the number of
     questions required.
 
-*   A Word document is saved to $PWD with
+*   A Word document is saved to questionsheets/ with
     the questions on it.
