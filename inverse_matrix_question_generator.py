@@ -17,18 +17,21 @@ out for a question sheet.
 import os
 import MatrixQuestioner as mq
 
-matrix_size = int(input('\nHow many rows in matrices?\n \
-                        enter 3 for a 3 x 3 matrix: '))
+rows = int(input('\nHow many rows in matrices?\n \
+    enter 3 for a 3 x 3 matrix: '))
 quant = int(input('How many matrices do you want? '))
 
-f = open('deleteme.markdown', 'w')
+questions = []
 for i in range(quant):
-    matrix = mq.MatrixQuestioner(matrix_size)
+    matrix = mq.MatrixQuestioner(rows)
     A, inv_A = matrix.inverse()
-    question = 'A = {}\t\tinv(A) = {}'.format(A, inv_A)
+    question = 'A = {}\t\tinv(A) = {}\n\n'.format(A, inv_A)
+    questions.append(question)
 
-    f.write(question)
-f.close()
+
+with open('deleteme.markdown', 'w') as f:
+    for question in questions:
+        f.write(question)
 
 os.system('pandoc -o questionsheets/inverse_matrix_questions.docx deleteme.markdown')
 os.remove('deleteme.markdown')
