@@ -4,8 +4,7 @@ This is a collection of scripts for generating mathematics
 questions for my university course.
 
 Scripts are added in an ad hoc basis, and will probably not
-be refactored before next academic year, despite the awful
-coding style.
+be refactored before next academic year.
 
 ## Use
 
