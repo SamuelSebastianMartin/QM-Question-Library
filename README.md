@@ -28,16 +28,13 @@ Generates matrices and their inverse.
 *   The user is asked for the number of
     questions required.
 
+*   The user is asked how many sybolic characters they
+    want in the matrix. Entering 0 would make all the
+    matrix elements integers; Entering 1 would cause
+    one character to be include an unknown e.g. (a-1).
+
 *   A Word document is saved to questionsheets/ with
     the questions on it.
-
-*   NOTE: the underlying class can handle symbols
-    in the derivation of the inverse. If this is
-    required, edit the code where `MatrixQuestioner`
-    is called, to indicate the number of symbols required.
-    For example:
-
-    `matrix = mq.MatrixQuestioner(rows, symbols=1)`
 
 ### system_solve.py
 
