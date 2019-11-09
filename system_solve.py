@@ -24,9 +24,9 @@ for n in range(quantity):
 
     questions.append(question)
 
-with open('matrix_eq_system.markdown', 'w') as f:
+with open('temp.markdown', 'w') as f:
     for question in questions:
         f.write(question)
 
-os.system('pandoc -o questionsheets/system_solve.docx matrix_eq_system.markdown')
-os.remove('matrix_eq_system.markdown')
+os.system('pandoc -o questionsheets/system_solve.docx temp.markdown')
+os.remove('temp.markdown')

@@ -19,19 +19,19 @@ import MatrixQuestioner as mq
 
 rows = int(input('\nHow many rows in matrices?\n \
     enter 3 for a 3 x 3 matrix: '))
-quant = int(input('How many matrices do you want? '))
+quantity = int(input('How many matrices do you want? '))
 
 questions = []
-for i in range(quant):
+for i in range(quantity):
     matrix = mq.MatrixQuestioner(rows)
     A, inv_A = matrix.inverse()
     question = 'A = {}\t\tinv(A) = {}\n\n'.format(A, inv_A)
     questions.append(question)
 
 
-with open('deleteme.markdown', 'w') as f:
+with open('temp1.markdown', 'w') as f:
     for question in questions:
         f.write(question)
 
-os.system('pandoc -o questionsheets/inverse_matrix_questions.docx deleteme.markdown')
-os.remove('deleteme.markdown')
+os.system('pandoc -o questionsheets/inverse_matrix.docx temp1.markdown')
+os.remove('temp1.markdown')
