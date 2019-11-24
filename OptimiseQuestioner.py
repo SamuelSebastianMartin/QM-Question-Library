@@ -21,35 +21,35 @@ class Quartic:
     def __init__(self, level='easy'):
         #  Set up random coefficients for the first derivative
         #  ax(bx + c)(dx + e)
-        if level[0] == 'h' or level[0] == 3:
-            self.a = random.randint(1, 4)
-            self.b = random.randint(1, 3)
-            self.c = random.randint(-9, 20)
-            self.d = random.randint(1, 3)
-            self.e = random.randint(-9, 20)
-            self.f = random.randint(-15, 15)  # Constant of integration
-        elif level[0] == 'm' or level[0] == 2:
-            self.a = random.randint(1, 1)
-            self.b = random.randint(1, 3)
-            self.c = random.randint(-9, 20)
-            self.d = random.randint(1, 3)
-            self.e = random.randint(-9, 20)
-            self.f = random.randint(-15, 15)  # Constant of integration
-        else:
-            self.a = random.randint(1, 1)
-            self.b = random.randint(1, 1) * 2  # Avoic francion x^4 coef.
-            self.c = random.randint(-4, 5) * 3  # Avoid fractions /3
-            self.d = random.randint(1, 1) * 2  # Avoic francion x^4 coef
-            self.e = random.randint(-9, 20) * 2  # Avoid fractions /2
-            self.f = random.randint(-5, 10)  # Constant of integration.
+        self.a = random.randint(1, 1)
+        self.b = random.randint(1, 1) * 2  # Avoic francion x^4 coef.
+        self.c = random.randint(-4, 5) * 3  # Avoid fractions /3
+        self.d = random.randint(1, 1) * 2  # Avoic francion x^4 coef
+        self.e = random.randint(-9, 20) * 3  # Avoid fractions /3
+        self.f = random.randint(-5, 10)  # Constant of integration.
 
     def get_question(self):
         dy_dx_hidden = self.a*x*(self.b*x + self.c)*(self.d*x + self.e)
         dy_dx = sp.expand(dy_dx_hidden)
+        d2y_dx2 = sp.diff(dy_dx)
         y = sp.integrate(dy_dx, x)
         y = y + self.f
-        c_points = (0, -self.c/self.b, -self.e/self.d)
+        c_points = self.order2_conditions(d2y_dx2)
         return y, dy_dx, c_points
+
+    def order2_conditions(self, d2y_dx2):
+        d2y_dx2 = str(d2y_dx2)
+        crit_points = {0: '', -self.c/self.b: '', -self.e/self.d: ''}
+        for pt in crit_points.keys():
+            x = pt
+            soc = eval(d2y_dx2)
+            if soc > 0:
+                crit_points[pt] = 'Minimum'
+            elif soc < 0:
+                crit_points[pt] = 'Maximum'
+            elif soc == 0:
+                crit_points[pt] = 'Stationary Point'
+        return crit_points
 
 
 for n in range(10):
