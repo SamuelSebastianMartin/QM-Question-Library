@@ -97,10 +97,3 @@ class Optimiser:
             elif soc == 0:
                 crit_points[pt] = 'Stationary Point'
         return crit_points
-
-
-for n in range(3):
-    Eq = Optimiser()
-    print(Eq.quadratic())
-    print(Eq.cubic())
-    print(Eq.quartic())
