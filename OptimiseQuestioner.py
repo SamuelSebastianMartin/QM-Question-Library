@@ -18,11 +18,25 @@ class Optimiser:
         and there will be no fractional coefficients.
     If the kwarg level='mid', then a = 1
     """
+    def __init__(self, order):
+        self.order = order
+        if self.order == 'quadratic':
+            self.equation = self.quadratic()
+        elif self.order == 'cubic':
+            self.equation = self.cubic()
+        elif self.order == 'quartic':
+            self.equation = self.quartic()
+        else:
+            raise Exception('Pass an equation type:  \
+                    quadratic, cubic or quartic')
+
+    def __repr__(self):
+        return self.order
 
     def quadratic(self):
         #  Set up random coefficients for the first derivative
         #  (bx + c)
-        self.b = random.randint(-5, 10) * 2
+        self.b = random.randint(-9, 10) * 2
         if self.b == 0:
             self.b += 2
         #  Set c as multiple of b to avoid fractional roots.
@@ -86,14 +100,18 @@ class Optimiser:
         return y, dy_dx, d2y_dx2
 
     def classify(self, d2y_dx2, crit_points):
+        """
+        Uses 'eval()' to check the 2nd order conditions.
+        Returns a dictionary with critical-x-value as key,
+        and max-min-stationary as value.
+        """
         d2y_dx2 = str(d2y_dx2)
-        for pt in crit_points.keys():
-            x = pt
+        for x in crit_points.keys():  # x is the key AND the variable.
             soc = eval(d2y_dx2)
             if soc > 0:
-                crit_points[pt] = 'Minimum'
+                crit_points[x] = 'Min'
             elif soc < 0:
-                crit_points[pt] = 'Maximum'
+                crit_points[x] = 'Max'
             elif soc == 0:
-                crit_points[pt] = 'Stationary Point'
+                crit_points[x] = 'Inflect'
         return crit_points
