@@ -21,6 +21,7 @@ be refactored before next academic year.
 ### inverse_matrix.py
 
 Generates matrices and their inverse.
+
 *   The user is asked for dimension of the
     square matrix (e.g. `3` would give a
     3x3 matrix.
@@ -53,3 +54,16 @@ represent a system of simultaneous equations.
 
 *   A Word document is saved to questionsheets/ with
     the questions on it.
+
+### optimise.py
+
+generates Q&A docx sheet on optimisation of 1 variable.
+
+*   User is asked for number of questions for each type
+    of equation [quadratic, cubic, quartic]
+
+*   A Word document is saved to questionsheets/ with the
+    questions on it.
+
+*   The output docx can be split into a table on the ':'
+    character, for nicer formatting.
